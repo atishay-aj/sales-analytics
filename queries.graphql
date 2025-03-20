@@ -1,0 +1,65 @@
+query GetCustomerSpending {
+  getCustomerSpending(customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736") {
+    customerId
+    totalSpent
+    averageOrderValue
+    lastOrderDate
+  }
+}
+
+query GetTopSellingProducts {
+  getTopSellingProducts(limit: 5) {
+    productId
+    name
+    totalSold
+  }
+}
+
+query getSalesAnalytics {
+  getSalesAnalytics(
+    startDate: "2024-12-15T05:05:58.471+00:00"
+    endDate: "2025-02-16T05:05:58.471+00:00"
+  ) {
+    totalRevenue
+    completedOrders
+    categoryBreakdown {
+      category
+      revenue
+    }
+  }
+}
+
+mutation PlaceOrder {
+  placeOrder(
+    input: {
+      products: [
+        { productId: "1e2c1b29-ec24-40dc-b2fc-1a3c17c3093c", quantity: 10 }
+      ]
+      customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736"
+    }
+  )
+}
+
+query GetCustomerOrders {
+  getCustomerOrders(
+    customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736"
+    page: 1
+    limit: 10
+  ) {
+    orders {
+      _id
+      customerId
+      products {
+        productId
+        quantity
+        priceAtPurchase
+      }
+      totalAmount
+      orderDate
+      status
+    }
+    totalOrders
+    currentPage
+    totalPages
+  }
+}
