@@ -64,8 +64,9 @@ The server will be available at:
 
 ### ✅ **Get Customer Spending**
 ```graphql
-query {
-  getCustomerSpending(customerId: "63f8b3d5a7b1d7f3b0a2c5e1") {
+query GetCustomerSpending {
+  getCustomerSpending(customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736") {
+    customerId
     totalSpent
     averageOrderValue
     lastOrderDate
@@ -75,7 +76,7 @@ query {
 
 ### ✅ **Get Top-Selling Products**
 ```graphql
-query {
+query GetTopSellingProducts {
   getTopSellingProducts(limit: 5) {
     productId
     name
@@ -86,8 +87,11 @@ query {
 
 ### ✅ **Get Sales Analytics**
 ```graphql
-query {
-  getSalesAnalytics(startDate: "2024-02-01", endDate: "2024-02-28") {
+query getSalesAnalytics {
+  getSalesAnalytics(
+    startDate: "2024-12-15T05:05:58.471+00:00"
+    endDate: "2025-02-16T05:05:58.471+00:00"
+  ) {
     totalRevenue
     completedOrders
     categoryBreakdown {
@@ -100,10 +104,20 @@ query {
 
 ### ✅ **Paginated Customer Orders**
 ```graphql
-query {
-  getCustomerOrders(customerId: "63f8b3d5a7b1d7f3b0a2c5e1", page: 1, limit: 5) {
+query GetCustomerOrders {
+  getCustomerOrders(
+    customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736"
+    page: 1
+    limit: 10
+  ) {
     orders {
       _id
+      customerId
+      products {
+        productId
+        quantity
+        priceAtPurchase
+      }
       totalAmount
       orderDate
       status
@@ -117,14 +131,15 @@ query {
 
 ### ✅ **Place an Order**
 ```graphql
-mutation {
-  placeOrder(input: {
-    customerId: "63f8b3d5a7b1d7f3b0a2c5e1",
-    products: [
-      { productId: "63f8b3d5a7b1d7f3b0a2c5e5", quantity: 2 },
-      { productId: "63f8b3d5a7b1d7f3b0a2c5e6", quantity: 1 }
-    ]
-  })
+mutation PlaceOrder {
+  placeOrder(
+    input: {
+      products: [
+        { productId: "1e2c1b29-ec24-40dc-b2fc-1a3c17c3093c", quantity: 10 }
+      ]
+      customerId: "7895595e-7f25-47fe-a6f8-94b31bfab736"
+    }
+  )
 }
 ```
 ---
